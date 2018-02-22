@@ -4,7 +4,7 @@ sig =
   [ withMaxTermSize 6
   , con "++"  ((++)    :: [Int] -> [Int] -> [Int])
   , con "zip" (zip     :: [Int] -> [Int] -> [(Int, Int)])
-  , con "rev" (reverse :: [Int] -> [Int])
+  , con "rev" (reverse :: [A] -> [A])
   , predicate "eqLen" (eqLen :: [Int] -> [Int] -> Bool)
   ]
 
