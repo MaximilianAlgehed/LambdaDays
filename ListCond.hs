@@ -2,10 +2,11 @@ import QuickSpec
 import Data.Function
 
 sig =
-  [ con "++"  ((++)    :: [Int] -> [Int] -> [Int])
-  , con "zip" (zip     :: [Int] -> [Int] -> [(Int, Int)])
+  [ withMaxTermSize 7
+  , con "++"  ((++)    :: [A] -> [A] -> [A])
+  , con "zip" (zip     :: [A] -> [A] -> [(A, A)])
   , con "rev" (reverse :: [A] -> [A])
-  , predicate "eqLen" ((==) `on` length :: [Int] -> [Int] -> Bool)
+  , predicate "eqLen" ((==) `on` length :: [A] -> [A] -> Bool)
   ]
 
 main = quickSpec $ withFixedSeed 355525 : sig

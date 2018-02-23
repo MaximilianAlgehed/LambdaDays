@@ -10,6 +10,8 @@ sig =
   , con "fst"  (fst   :: (A, B) -> A)
   , con "snd"  (snd   :: (A, B) -> B)
   , con "<>"   ((<>)  :: (C -> A) -> (C -> B) -> (C -> (A, B)))
+  , con "app"  (uncurry ($) :: ((A -> B), A) -> B)
+  , con "*"    ((\f g (a, b) -> (f a, g b)) :: (A -> B) -> (C -> D) -> (A, C) -> (B, D))
   ]
 
 main = quickSpec $ withFixedSeed 355525 : sig

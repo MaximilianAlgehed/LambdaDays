@@ -1,7 +1,8 @@
 import QuickSpec
 
 sig =
-  [ con "+"   ((+) :: Int -> Int -> Int)
+  [ withMaxTermSize 8
+  , con "+"   ((+) :: Int -> Int -> Int)
   , con "0"   (0   :: Int)
   , con "*"   ((*) :: Int -> Int -> Int)
   , con "1"   (1   :: Int)
