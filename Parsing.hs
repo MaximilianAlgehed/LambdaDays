@@ -29,6 +29,7 @@ peek = do
   return x
 
 main = quickSpec [
+  withMaxTermSize 7,
   inst (Sub Dict :: Arbitrary A :- Arbitrary (ReadP A)),
   inst (Sub Dict :: Ord A :- Observe String [(A, String)] (ReadP A)),
 

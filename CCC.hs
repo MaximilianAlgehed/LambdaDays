@@ -3,7 +3,8 @@ import QuickSpec
 f <> g = \c -> (f c, g c)
 
 sig =
-  [ con "id"   (id    :: A -> A)
+  [ withMaxTermSize 7
+  , con "id"   (id    :: A -> A)
   , con "."    ((.)   :: (B -> C) -> (A -> B) -> (A -> C))
   , con "curr" (curry :: ((A, B) -> C) -> (A -> B -> C))
   , con "fst"  (fst   :: (A, B) -> A)

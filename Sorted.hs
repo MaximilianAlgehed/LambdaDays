@@ -1,14 +1,10 @@
--- Sorting and sorted lists.
--- Illustrates testing of conditional laws.
 import QuickSpec
 import Data.List
 
-sorted :: Ord a => [a] -> Bool
-sorted [] = True
-sorted [_] = True
-sorted (x:y:xs) = x <= y && sorted (y:xs)
+sorted xs = and (zipWith (<=) xs (tail xs))
 
 main = quickSpec [
+  withMaxTermSize 7,
   background [
     con ":" ((:) :: A -> [A] -> [A]),
     con "[]" ([] :: [A]) ],

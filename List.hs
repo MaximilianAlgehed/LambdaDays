@@ -1,7 +1,8 @@
 import QuickSpec
 
 sig =
-  [ con "++"  ((++)    :: [A] -> [A] -> [A])
+  [ withMaxTermSize 7
+  , con "++"  ((++)    :: [A] -> [A] -> [A])
   , con "zip" (zip     :: [A] -> [B] -> [(A, B)])
   , con "rev" (reverse :: [A] -> [A])
   ]

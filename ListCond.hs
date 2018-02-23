@@ -2,8 +2,7 @@ import QuickSpec
 import Data.Function
 
 sig =
-  [ withMaxTermSize 6
-  , con "++"  ((++)    :: [Int] -> [Int] -> [Int])
+  [ con "++"  ((++)    :: [Int] -> [Int] -> [Int])
   , con "zip" (zip     :: [Int] -> [Int] -> [(Int, Int)])
   , con "rev" (reverse :: [A] -> [A])
   , predicate "eqLen" ((==) `on` length :: [Int] -> [Int] -> Bool)

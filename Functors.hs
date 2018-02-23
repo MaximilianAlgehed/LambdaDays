@@ -4,7 +4,8 @@ safeHead [] = Nothing
 safeHead (x:_) = Just x
 
 sig =
-  [ con "id"       (id       :: A -> A)
+  [ withMaxTermSize 7
+  , con "id"       (id       :: A -> A)
   , con "."        ((.)      :: (B -> C) -> (A -> B) -> (A -> C))
   , con "mapList"  (fmap     :: (A -> B) -> [A] -> [B])
   , con "mapMaybe" (fmap     :: (A -> B) -> Maybe A -> Maybe B)
