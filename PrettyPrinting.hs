@@ -1,8 +1,11 @@
-{-# LANGUAGE DeriveDataTypeable, TypeOperators, StandaloneDeriving #-}
+-- Pretty-printing combinators.
+-- Illustrates observational equality and using custom generators.
+-- See the QuickSpec paper for more details.
+{-# LANGUAGE DeriveDataTypeable, TypeOperators, StandaloneDeriving, TypeSynonymInstances, FlexibleInstances, MultiParamTypeClasses #-}
 import Control.Monad
 import Test.QuickCheck
 import QuickSpec
-import Text.PrettyPrint.HughesPJ
+import Text.PrettyPrint.HughesPJ hiding (Str)
 import Data.Proxy
 import Data.Constraint
 
@@ -17,13 +20,12 @@ instance Arbitrary Doc where
         [ liftM2 ($$) bin bin | n > 0 ] ++
         [ liftM2 (<>) bin bin | n > 0 ] ++
         [ liftM2 nest arbitrary un | n > 0 ] ++
-        [ fmap text arbString ]
+        [ fmap text arbitrary ]
 
-arbString :: Gen String
-arbString = listOf (elements "ab")
-
-obsDoc :: Context -> Doc -> String
-obsDoc (Context ctx) d = render (ctx d)
+-- Observational equality.
+instance Observe Context Str Doc where
+  observe (Context ctx) d = Str (render (ctx d))
+newtype Str = Str String deriving (Eq, Ord)
 
 newtype Context = Context (Doc -> Doc)
 
@@ -48,7 +50,6 @@ nesting d = head [ i | i <- nums, unindented (nest (-i) d) ]
 
 main = quickSpec [
   withMaxTermSize 9,
-  withFixedSeed 355525,
   
   background [
     con "[]" ([] :: [A]),
@@ -64,8 +65,6 @@ main = quickSpec [
   con "<>" (<>),
   con "$$" ($$),
 
-  inst arbString,
-  inst (\gen -> observe gen obsDoc),
+  inst (Sub Dict :: () :- Observe Context Str Doc),
   inst (Sub Dict :: () :- Arbitrary Doc),
-  inst (Sub Dict :: () :- Arbitrary Context),
   defaultTo (Proxy :: Proxy Bool)]
